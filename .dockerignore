@@ -1,0 +1,9 @@
+**/build
+.gradle
+.kotlin
+.idea
+local.properties
+bff/.env
+app/google-services.json
+*.jks
+*.keystore

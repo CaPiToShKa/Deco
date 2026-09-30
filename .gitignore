@@ -1,0 +1,16 @@
+# Gradle / build
+.gradle/
+build/
+/local.properties
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Secrets and per-developer config — never commit
+app/google-services.json
+bff/.env
+*.jks
+*.keystore

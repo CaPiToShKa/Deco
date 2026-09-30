@@ -1,0 +1,19 @@
+# Copy to local.properties (git-ignored). Android Studio adds sdk.dir automatically.
+# sdk.dir=/Users/you/Library/Android/sdk
+
+# demo = everything in memory on the phone (default); bff = use the BFF server
+BACKEND_MODE=demo
+# Emulator -> BFF running on your computer: http://10.0.2.2:8080
+BFF_BASE_URL=
+# Optional news feed (JSON array of articles or RSS). Blank = sample articles.
+NEWS_FEED_URL=
+RENEW_URL=https://www.deco.proteste.pt/
+PRIVACY_POLICY_URL=https://www.deco.proteste.pt/
+
+# SFMC MobilePush app (Setup > Platform Tools > Apps > MobilePush). Also needs app/google-services.json.
+SFMC_APP_ID=
+SFMC_ACCESS_TOKEN=
+SFMC_SERVER_URL=
+SFMC_MID=
+# Firebase project number (Firebase console > Project settings > Cloud Messaging > Sender ID)
+SFMC_SENDER_ID=

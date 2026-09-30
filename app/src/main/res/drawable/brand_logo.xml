@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- BRAND SLOT: replace this placeholder with the official logo supplied by DECO PROteste
+     (vector drawable preferred). It is shown on the login screen. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#C8102E"
+        android:pathData="M12,2 L20,5 L20,11 C20,16 16.6,20.3 12,22 C7.4,20.3 4,16 4,11 L4,5 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M10.6,15.4 L16.4,9.6 L15,8.2 L10.6,12.6 L8.9,10.9 L7.5,12.3 Z" />
+</vector>

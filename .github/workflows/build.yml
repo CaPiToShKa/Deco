@@ -1,0 +1,67 @@
+name: Build and test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: zulu
+          java-version: 17
+          cache: gradle
+
+      # The executable bit is lost when files are uploaded via the GitHub web UI or committed from Windows.
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      # Optional: enables Firebase + SFMC MobilePush in the built APK.
+      # Add the whole google-services.json content as the repository secret GOOGLE_SERVICES_JSON.
+      - name: Add google-services.json (optional)
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
+            printf '%s' "$GOOGLE_SERVICES_JSON" > app/google-services.json
+            echo "Firebase config added"
+          else
+            echo "No Firebase config: building without push"
+          fi
+
+      - name: Unit tests (domain, API contract, data, BFF, ViewModels)
+        run: ./gradlew --no-daemon --stacktrace :core:domain:test :core:api:test :core:data:test :bff:test :app:testDebugUnitTest
+
+      - name: Build debug APK
+        env:
+          BACKEND_MODE: ${{ vars.BACKEND_MODE }}
+          BFF_BASE_URL: ${{ vars.BFF_BASE_URL }}
+          NEWS_FEED_URL: ${{ vars.NEWS_FEED_URL }}
+          SFMC_APP_ID: ${{ secrets.SFMC_APP_ID }}
+          SFMC_ACCESS_TOKEN: ${{ secrets.SFMC_ACCESS_TOKEN }}
+          SFMC_SERVER_URL: ${{ secrets.SFMC_SERVER_URL }}
+          SFMC_MID: ${{ secrets.SFMC_MID }}
+          SFMC_SENDER_ID: ${{ secrets.SFMC_SENDER_ID }}
+        run: ./gradlew --no-daemon --stacktrace :app:assembleDebug
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: deco-socio-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: failure()
+        with:
+          name: test-reports
+          path: '**/build/reports/tests/'

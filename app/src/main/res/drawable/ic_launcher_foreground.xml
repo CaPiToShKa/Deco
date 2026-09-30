@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder launcher glyph (generic shield + check). Replace with official brand artwork. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30 L74,37 L74,52 C74,64 65.5,74 54,78 C42.5,74 34,64 34,52 L34,37 Z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#C8102E"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M44.5,54 L51,60.5 L64,47.5" />
+</vector>
